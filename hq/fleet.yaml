@@ -1,0 +1,3 @@
+name: oss-template
+category: Core Infrastructure
+description: Standardized template for spinning up new open-source repositories.

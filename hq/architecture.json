@@ -1,0 +1,114 @@
+{
+  "core_purpose": "A standardized scaffold/meta-repository for bootstrapping new open-source projects in the Scramjet ecosystem. It ships community-health files, AI assistant context (Cursor/Copilot), Biome lint+format, Husky+commitlint conventional-commits enforcement, Dependabot, stale-bot, Release Please automation, and pkg.pr.new preview publishing — but contains no application source code.",
+  "status": "Incomplete",
+  "architecture": {
+    "frontend": "None",
+    "backend": "None (target runtime documented as Cloudflare Workers/Pages)",
+    "database": "None"
+  },
+  "main_features": [
+    {
+      "name": "Community health files (LICENSE, CoC, Contributing, Security, PR/Issue templates, CODEOWNERS)",
+      "status": "Operational",
+      "files_involved": [
+        "LICENSE",
+        "CODE_OF_CONDUCT.md",
+        "CONTRIBUTING.md",
+        "SECURITY.md",
+        ".github/PULL_REQUEST_TEMPLATE.md",
+        ".github/ISSUE_TEMPLATE/bug_report.yml",
+        ".github/ISSUE_TEMPLATE/feature_request.yml",
+        ".github/CODEOWNERS"
+      ]
+    },
+    {
+      "name": "AI assistant context rules (Cursor + Copilot)",
+      "status": "Operational",
+      "files_involved": [
+        ".cursorrules",
+        ".github/copilot-instructions.md"
+      ]
+    },
+    {
+      "name": "Biome formatting and linting",
+      "status": "Operational",
+      "files_involved": [
+        "biome.json",
+        "package.json"
+      ]
+    },
+    {
+      "name": "Conventional Commits enforcement (Husky + commitlint + lint-staged)",
+      "status": "Operational",
+      "files_involved": [
+        "commitlint.config.js",
+        ".husky/_",
+        "package.json"
+      ]
+    },
+    {
+      "name": "Release Please automation",
+      "status": "Operational",
+      "files_involved": [
+        ".github/workflows/release-please.yml"
+      ]
+    },
+    {
+      "name": "Dependabot dependency updates",
+      "status": "Operational",
+      "files_involved": [
+        ".github/dependabot.yml"
+      ]
+    },
+    {
+      "name": "Stale issue/PR bot",
+      "status": "Operational",
+      "files_involved": [
+        ".github/workflows/stale.yml"
+      ]
+    },
+    {
+      "name": "First-interaction greetings bot",
+      "status": "Operational",
+      "files_involved": [
+        ".github/workflows/greetings.yml"
+      ]
+    },
+    {
+      "name": "CI build + pkg.pr.new preview publish",
+      "status": "Broken",
+      "files_involved": [
+        ".github/workflows/ci.yml",
+        "package.json"
+      ]
+    },
+    {
+      "name": "Fleet registry metadata",
+      "status": "Operational",
+      "files_involved": [
+        "hq/fleet.yaml"
+      ]
+    },
+    {
+      "name": "ESLint linting",
+      "status": "Broken",
+      "files_invoked": [
+        "package.json"
+      ],
+      "files_involved": [
+        "package.json"
+      ]
+    },
+    {
+      "name": "Test suite",
+      "status": "Stubbed",
+      "files_involved": [
+        "CONTRIBUTING.md"
+      ]
+    }
+  ],
+  "technical_debt": "CI workflow runs `npm run build` but no `build` script is defined in package.json — CI will fail on every push/PR. The `lint` script invokes `eslint .` but ESLint is not installed as a dependency (only Biome and Prettier are present), so `npm run check` will fail. CONTRIBUTING.md tells contributors to run `npm test` but no test script or test runner exists. Both Prettier (lint-staged) and Biome (format/lint) are configured, creating tooling overlap and potential conflicts. No `src/` directory or actual application code — the repo's stated `Cloudflare-native` orientation is aspirational, enforced only via AI rules. `pnpm-lock.yaml` is committed and `packageManager` is pnpm@9, but CI uses `npm ci` with npm cache — package manager mismatch. `.gitignore` is only 14 bytes (likely incomplete). No CHANGELOG.md yet despite Release Please configuration. CODEOWNERS references `@scramjetio/*` teams that may not exist on the actual GitHub org.",
+  "active_roadmap": [
+    "No open GitHub issues — roadmap is implicit. Highest-priority implied work: fix CI by adding a `build` script (or removing the build step), reconcile npm-vs-pnpm in CI, install ESLint or drop it from the `lint` script, and add a real test runner so `npm test` referenced in CONTRIBUTING.md works."
+  ]
+}
